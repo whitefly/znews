@@ -1,31 +1,30 @@
 package com.example.znews.dao;
 
 import com.example.znews.model.Question;
-import com.example.znews.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 @Mapper
 public interface QuestionDao {
-    String TABLE_NAME = "question";
-    String PROPERTY = "title,content,create_date,user_id,comment_count";
-
-    @Insert({"insert into ", TABLE_NAME, "(", PROPERTY, ") values(#{title},#{content},#{createDate},#{userId},#{commentCount})"})
-    int addUser(Question q);
 
 
-    //选出最新的问题
-    Question findLastQuestions(@Param("userId") int useId,
-                               @Param("offset") int offset,
-                               @Param("limit") int limit
-    );
+    Question findQuestionById(@Param("id") int id);
 
-    @Select({"select * from", TABLE_NAME, "where id=${id}"})
-    User findUserById(@Param("id") int id);
+    int insertQuestion(Question question);
+
+    boolean deleteQuestionById(int id);
+
+    boolean updateQuestion(Question question);
+
+    /*
+    显示每页的问题
+     */
+    List<Question> findLatestQuestions(@Param("userId") int useId,
+                                       @Param("offset") int offset,
+                                       @Param("limit") int limit);
 
 
-    @Update({"update", TABLE_NAME, "set password=#{password} where id = #{id}"})
-    void update(User user);
-
-    @Delete({"Delete from", TABLE_NAME, "where id=#{id}"})
-    void delete(int id);
 }

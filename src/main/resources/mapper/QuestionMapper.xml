@@ -1,0 +1,48 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.znews.dao.QuestionDao">
+    <sql id="tableName">question</sql>
+    <sql id="selectFields">title,content,user_id,created_date,comment_count
+    </sql>
+
+
+    <select id="findQuestionById" resultType="com.example.znews.model.Question">
+        select * from
+        <include refid="tableName"></include>
+        where id = #{id};
+    </select>
+
+    <insert id="insertQuestion" useGeneratedKeys="true">
+        insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
+        values(#{title},#{content},#{userId},#{createdDate},#{commentCount})
+    </insert>
+
+    <delete id="deleteQuestionById">
+        delete from
+        <include refid="tableName"></include>
+        where id = #{id}
+    </delete>
+
+    <update id="updateQuestion">
+        update
+        <include refid="tableName"></include>
+        set title =#{title} ,content=#{content},user_id=#{userId},created_date=#{createdDate},comment_count=#{commentCount}
+        where id = #{id}
+    </update>
+
+
+
+    <select id="findLatestQuestions"  resultType="com.example.znews.model.Question" >
+        SELECT *
+        FROM
+        <include refid="tableName"/>
+
+        <if test="userId != 0">
+            WHERE user_id = #{userId}
+        </if>
+        ORDER BY id DESC LIMIT #{offset},#{limit}
+    </select>
+</mapper>

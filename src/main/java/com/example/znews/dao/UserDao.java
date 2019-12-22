@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface UserDao {
     String TABLE_NAME = "user";
-    String PROPERTY = "name,password,salt,head_url";
 
 
     User findUserById(@Param("id") int id);

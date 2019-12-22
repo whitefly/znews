@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Random;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,8 +30,11 @@ public class UserDaoTest {
 
     @Test
     public void addUser() {
-        User one = new User("zhouang", "123", "good", "xingbao.site");
-        userDao.insertUser(one);
+        Random random = new Random();
+        for (int i = 100; i < 120; i++) {
+            User one = new User("wangqiang" + i, random.nextInt(100000) + 100000 + "", "dick", "baidu.com/" + random.nextInt());
+            userDao.insertUser(one);
+        }
     }
 
 

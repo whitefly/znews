@@ -4,13 +4,11 @@
 
 <mapper namespace="com.example.znews.dao.UserDao">
 
-    <sql id="tableName">
-user
-    </sql>
+    <sql id="tableName">user</sql>
 
     <select id="findUserById" resultType="com.example.znews.model.User">
         select * from
-        <include refid="tableName"></include>
+        <include refid="tableName"/>
         where id = #{id};
     </select>
 
@@ -22,16 +20,17 @@ user
 
     <delete id="deleteUserById">
         delete from
-        <include refid="tableName"></include>
+        <include refid="tableName"/>
         where id = #{id}
     </delete>
 
     <update id="updateUser">
         update
-        <include refid="tableName"></include>
+        <include refid="tableName"/>
         set name =#{name} ,password=#{password},salt=#{salt},head_url=#{headUrl}
         where id = #{id}
     </update>
+
 
 
 </mapper>

@@ -1,14 +1,25 @@
 package com.example.znews.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Question {
     private int id;
     private String title;
     private String content;
-    private Date createDate;
+    private Date createdDate;
     private int userId;
     private int commentCount;
+
+    public Question(String title, String content, Date createdDate, int userId, int commentCount) {
+        this.title = title;
+        this.content = content;
+        this.createdDate = createdDate;
+        this.userId = userId;
+        this.commentCount = commentCount;
+    }
+
+    public Question() {
+    }
 
     public int getId() {
         return id;
@@ -34,12 +45,12 @@ public class Question {
         this.content = content;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getUserId() {
@@ -56,5 +67,17 @@ public class Question {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createdDate=" + createdDate +
+                ", userId=" + userId +
+                ", commentCount=" + commentCount +
+                '}';
     }
 }
