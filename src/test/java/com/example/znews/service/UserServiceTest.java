@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
 public class UserServiceTest {
@@ -35,11 +34,6 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
-    @Test
-    public void demo() {
-        userService.demo();
-    }
-
 
     @Test
     public void demoOfAssert() {
@@ -49,7 +43,7 @@ public class UserServiceTest {
 
         Assert.assertEquals(num, 1);
         Assert.assertArrayEquals(nums, new int[]{1, 2, 3});
-        Assert.assertEquals(content,"周昂");
+        Assert.assertEquals(content, "周昂");
 
 
     }
