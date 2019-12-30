@@ -13,6 +13,8 @@ public interface UserDao {
 
     User findUserById(@Param("id") int id);
 
+    User findUserByName(@Param("name") String name);
+
     int insertUser(User user);
 
     boolean deleteUserById(int id);

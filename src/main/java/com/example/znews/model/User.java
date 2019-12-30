@@ -14,6 +14,9 @@ public class User {
         this.headUrl = headUrl;
     }
 
+    public User() {
+    }
+
     public Integer getId() {
         return id;
     }

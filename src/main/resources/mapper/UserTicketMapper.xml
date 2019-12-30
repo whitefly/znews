@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.znews.dao.UserTicketDao">
+    <sql id="tableName">user_ticket</sql>
+    <sql id="selectFields">user_id,ticket,expired,status
+    </sql>
+
+
+    <select id="findQuestionByTicket" resultType="com.example.znews.model.UserTicket">
+        select * from
+        <include refid="tableName"></include>
+        where ticket = #{ticket};
+    </select>
+
+    <insert id="insertUserTicket" useGeneratedKeys="true">
+        insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
+        values(#{userId},#{ticket},#{expired},#{status})
+    </insert>
+
+    <update id="updateUserTicket">
+        update
+        <include refid="tableName"/>
+        set user_id =#{userId} ,ticket=#{ticket},expired=#{expired},status=#{status}
+        where id = #{id}
+    </update>
+
+
+</mapper>

@@ -12,6 +12,13 @@
         where id = #{id};
     </select>
 
+    <select id="findUserByName" resultType="com.example.znews.model.User">
+        select * from
+        <include refid="tableName"/>
+        where name = #{name};
+    </select>
+
+
     <insert id="insertUser" useGeneratedKeys="true">
         insert into <include refid="tableName"></include>(name,password,salt,head_url)
         values(#{name},#{password},#{salt},#{headUrl})
@@ -30,7 +37,6 @@
         set name =#{name} ,password=#{password},salt=#{salt},head_url=#{headUrl}
         where id = #{id}
     </update>
-
 
 
 </mapper>

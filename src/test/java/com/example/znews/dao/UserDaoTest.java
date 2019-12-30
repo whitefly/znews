@@ -53,4 +53,11 @@ public class UserDaoTest {
         userDao.updateUser(user);
 
     }
+
+    @Test
+    public void findUserByName() {
+        String userName = "zhouang";
+        User item = userDao.findUserByName(userName);
+        System.out.println(item);
+    }
 }
