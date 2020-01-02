@@ -32,20 +32,23 @@ public class UserInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
         UserTicket userTicket = null;
-        for (Cookie cookie : cookies) {
-            if ("ticket".equals(cookie.getName())) {
-                String ticket = cookie.getValue();
-                userTicket = userTicketDao.findQuestionByTicket(ticket);
-                break;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("ticket".equals(cookie.getName())) {
+                    String ticket = cookie.getValue();
+                    userTicket = userTicketDao.findQuestionByTicket(ticket);
+                    break;
+                }
+            }
+            //判断ticket的有效性
+            if (userTicket != null && userTicket.getStatus() == 0 && userTicket.getExpired().after(new Date())) {
+                //ticket有效,设置为临时全局变量
+                User user = userDao.findUserById(userTicket.getUserId());
+                hostHolder.setUsers(user);
+
             }
         }
-        //判断ticket的有效性
-        if (userTicket != null && userTicket.getStatus() == 0 && userTicket.getExpired().after(new Date())) {
-            //ticket有效,设置为临时全局变量
-            User user = userDao.findUserById(userTicket.getUserId());
-            hostHolder.setUsers(user);
 
-        }
         return true;
     }
 

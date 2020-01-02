@@ -1,6 +1,8 @@
 package com.example.znews.controller;
 
 import com.example.znews.service.LoginService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import java.util.Map;
 
 @Controller
 public class LoginController {
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private LoginService loginService;
@@ -63,12 +66,11 @@ public class LoginController {
 
 
     @GetMapping(path = "/loginPage")
-    public String loginPage(@RequestParam(value = "next",required = false) String next, Model model) {
+    public String loginPage(@RequestParam(value = "next", required = false) String next, Model model) {
         //hidden下next
         model.addAttribute("next", next);
         return "login";
     }
-
 
 
 }

@@ -77,7 +77,7 @@ public class LoginService {
         ticket.setUserId(userId);
         ticket.setStatus(0);// 状态0位为有效
         Date now = new Date();
-        now.setTime(now.getTime() + 10 * 24 * 3600);
+        now.setTime(now.getTime() + 30 * 24 * 3600);
         ticket.setExpired(now);
         ticket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
         userTicketDao.insertUserTicket(ticket);

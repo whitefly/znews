@@ -2,12 +2,16 @@ package com.example.znews.controller;
 
 import com.example.znews.model.Question;
 import com.example.znews.model.User;
+import com.example.znews.service.LoginService;
 import com.example.znews.service.QuestionService;
 import com.example.znews.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.Map;
 
 @Controller
 public class IndexController {
+
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     UserService userService;
