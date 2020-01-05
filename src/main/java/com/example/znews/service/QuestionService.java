@@ -26,6 +26,10 @@ public class QuestionService {
     }
 
 
+    public Question getQuestionById(int id) {
+        return questionDao.findQuestionById(id);
+    }
+
     public boolean addQuestion(Question question) {
         //js字符转义
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));

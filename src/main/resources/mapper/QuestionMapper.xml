@@ -29,13 +29,13 @@
     <update id="updateQuestion">
         update
         <include refid="tableName"></include>
-        set title =#{title} ,content=#{content},user_id=#{userId},created_date=#{createdDate},comment_count=#{commentCount}
+        set title =#{title}
+        ,content=#{content},user_id=#{userId},created_date=#{createdDate},comment_count=#{commentCount}
         where id = #{id}
     </update>
 
 
-
-    <select id="findLatestQuestions"  resultType="com.example.znews.model.Question" >
+    <select id="findLatestQuestions" resultType="com.example.znews.model.Question">
         SELECT *
         FROM
         <include refid="tableName"/>
@@ -45,4 +45,11 @@
         </if>
         ORDER BY id DESC LIMIT #{offset},#{limit}
     </select>
+
+    <update id="plusCommentCount">
+        update
+        <include refid="tableName"></include>
+        set comment_count=comment_count+1
+        where id=#{id}
+    </update>
 </mapper>

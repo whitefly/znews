@@ -1,0 +1,42 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.znews.dao.CommentDao">
+    <sql id="tableName">comment</sql>
+    <sql id="selectFields">content,user_id,created_date,entity_id,entity_type,status</sql>
+
+
+    <select id="findCommentById" resultType="com.example.znews.model.Comment">
+        select * from
+        <include refid="tableName"></include>
+        where id = #{id};
+    </select>
+
+    <insert id="insertComment" useGeneratedKeys="true">
+        insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
+        values(#{content},#{userId},#{createdDate},#{entityId},#{entityType},#{status})
+    </insert>
+
+    <update id="deleteCommentById">
+        update
+        <include refid="tableName"></include>
+        set status=#{status}
+        where id = #{id}
+    </update>
+
+    <update id="updateComment">
+        update
+        <include refid="tableName"></include>
+        set content=#{title}
+        ,user_id=#{userId},created_date=#{createdDate},entity_id=#{entityId},entity_type=#{entityType},status=#{status}
+        where id = #{id}
+    </update>
+
+    <select id="findCommentsByEntity" resultType="com.example.znews.model.Comment">
+        select * from
+        <include refid="tableName"></include>
+        where entity_type=${entityType} and entity_id=${entityId}
+    </select>
+</mapper>

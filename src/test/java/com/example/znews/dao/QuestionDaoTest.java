@@ -1,6 +1,7 @@
 package com.example.znews.dao;
 
 import com.example.znews.model.Question;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,12 @@ public class QuestionDaoTest {
         List<Question> result = questionDao.findLatestQuestions(0, 1, 10);
 
         System.out.println(result);
+    }
+
+    @Test
+    public void plusCommentCount() {
+        int id = 13;
+        Assert.assertEquals(1, questionDao.plusCommentCount(id));
+
     }
 }

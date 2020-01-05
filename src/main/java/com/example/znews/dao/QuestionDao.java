@@ -26,5 +26,5 @@ public interface QuestionDao {
                                        @Param("offset") int offset,
                                        @Param("limit") int limit);
 
-
+    int plusCommentCount(int id);
 }

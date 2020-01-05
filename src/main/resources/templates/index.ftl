@@ -70,7 +70,7 @@
                                         <meta itemprop="answer-url-token" content="13174385">
                                         <h2 class="feed-title">
                                             <a class="question_link" target="_blank"
-                                               href="https://nowcoder.com/question/19857995#answer-389034">${vo["question"].title}</a>
+                                               href="/question/${vo["question"].id}">${vo["question"].title}</a>
                                         </h2>
                                         <div class="feed-question-detail-item">
                                             <div class="question-description-plain zm-editable-content"></div>
@@ -109,7 +109,7 @@
                                                  data-author-name="李淼"
                                                  data-entry-url="/question/19857995/answer/13174385">
                                                 <div class="zh-summary summary clearfix">${vo["question"].content}
-                                                    <a href="https://nowcoder.com/question/19857995/answer/13174385"
+                                                    <a href="/question/${vo["question"].id}"
                                                        class="toggle-expand">显示全部</a></div>
                                                 <p class="visible-expanded">
                                                     <a itemprop="url" class="answer-date-link meta-item"
@@ -164,6 +164,8 @@
             },
             "editor": ["bio", "topic"]
         }
+
+
 
 
 
@@ -253,9 +255,13 @@
 
 
 
+
+
 </script>
 <script type="text/json" class="json-inline" data-name="user_status">[null, null]</script>
 <script type="text/json" class="json-inline" data-name="env">["zhihu.com", "comet.zhihu.com", false, null, false]
+
+
 
 
 
@@ -273,6 +279,8 @@
 
 
 
+
+
 </script>
 <script type="text/json" class="json-inline" data-name="ra-urls">{
             "Report": "https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/Report.d6e20840.js",
@@ -281,6 +289,8 @@
             "common": "https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/common.ed1d17c3.js",
             "CommentApp": "https:\/\/static.zhihu.com\/static\/revved\/-\/apps\/CommentApp.2ab02258.js"
         }
+
+
 
 
 
