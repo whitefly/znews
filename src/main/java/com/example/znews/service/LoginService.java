@@ -5,6 +5,7 @@ import com.example.znews.dao.UserTicketDao;
 import com.example.znews.model.User;
 import com.example.znews.model.UserTicket;
 import com.example.znews.utils.PasswordUtil;
+import com.example.znews.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class LoginService {
             String salt = UUID.randomUUID().toString().substring(0, 8);
             user.setSalt(salt);
             user.setPassword(PasswordUtil.getSaltPassword(password, user.getSalt()));
-            user.setHeadUrl("0c6a39621ab1d456b1e6e492d0becc0c_s.jpg");
+            user.setHeadUrl(UserUtil.getRandomImageUrl());
             userDao.insertUser(user);
         }
         return rnt;

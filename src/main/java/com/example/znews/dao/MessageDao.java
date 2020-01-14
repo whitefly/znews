@@ -19,4 +19,9 @@ public interface MessageDao {
 
     int updateMessage(Message Message);
 
+    List<Message> getMessagesByConversationId(String conversationId, int offset, int limit);
+
+
+    List<Message> getConversationList(int userId, int offset, int limit);
+
 }

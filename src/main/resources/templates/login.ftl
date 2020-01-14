@@ -11,6 +11,7 @@
     <title>牛客 - 与世界分享你的知识、经验和见解</title>
     <link rel="dns-prefetch" href="">
     <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/message.css">
     <meta name="google-site-verification" content="FTeR0c8arOPKh8c5DYh_9uu98_zJbaWw53J-Sch9MTg">
     <meta name="baidu-site-verification" content="KPFppAFoYF4Kkdv9">
     <meta property="qc:admins" content="00544670776201056375">

@@ -66,4 +66,17 @@ public class Message {
     public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", fromId=" + fromId +
+                ", toId=" + toId +
+                ", content='" + content + '\'' +
+                ", createdDate=" + createdDate +
+                ", hasRead=" + hasRead +
+                ", conversationId='" + conversationId + '\'' +
+                '}';
+    }
 }
