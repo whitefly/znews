@@ -18,6 +18,11 @@ public class QuestionUtil {
         return node.toString();
     }
 
+    static public String getCodeJson(int code) {
+        ObjectNode node = mapper.createObjectNode();
+        node.put("code", code);
+        return node.toString();
+    }
 
 
     public static void main(String[] args) {

@@ -1,11 +1,9 @@
 package com.example.znews.controller;
 
 
-import com.example.znews.model.Comment;
-import com.example.znews.model.HostHolder;
-import com.example.znews.model.Question;
-import com.example.znews.model.User;
+import com.example.znews.model.*;
 import com.example.znews.service.CommentService;
+import com.example.znews.service.LikeService;
 import com.example.znews.service.QuestionService;
 import com.example.znews.service.UserService;
 import com.example.znews.utils.QuestionUtil;
@@ -33,6 +31,9 @@ public class QuestionController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
 
     @PostMapping(path = "/question/add")
@@ -67,11 +68,23 @@ public class QuestionController {
         //问题下的回答
         List<Map<String, Object>> vos = new ArrayList<>();
         List<Comment> answers = commentService.getCommentByQuestion(question);
+
+        User loginUser = hostHolder.getUser();
         for (Comment item : answers) {
             User user = userService.findUserById(item.getUserId());
             Map<String, Object> vo = new HashMap<>();
             vo.put("user", user);
             vo.put("comment", item);
+            //回答赞的个数
+            long likeCount = likeService.getLikeCount(item.getEntityType(), item.getUserId());
+            vo.put("likeCount", likeCount);
+
+            //登录用户赞的状态
+            if (loginUser == null) {
+                vo.put("liked", 0);
+            } else {
+                vo.put("liked", likeService.getLikeStatus(item.getEntityType(), item.getEntityId(), loginUser.getId()));
+            }
             vos.add(vo);
         }
         model.addAttribute("vos", vos);

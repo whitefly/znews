@@ -1,37 +1,50 @@
 package com.example.znews.service;
 
+import com.example.znews.dao.UserDao;
+import com.example.znews.model.User;
+import com.example.znews.utils.RedisAdapter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import java.io.IOException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisServiceTest {
 
     @Autowired
-    private RedisService redisService;
+    private RedisAdapter redisService;
+
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private UserDao userDao;
 
 
     @Test
-    public void addkv() {
-        String k = "goodman";
-        String v = "123456";
-        redisService.addKV(k, v);
+    public void addUser() throws IOException {
+//        User user = userDao.findUserById(50);
+        ObjectMapper mapper = new ObjectMapper();
+//        String rnt = mapper.writeValueAsString(user);
+//        redisService.addKV("user", rnt);
+
+        String userJson = redisService.getKV("user");
+        User user = mapper.readValue(userJson, User.class);
+        System.out.println(user);
+
+
     }
 
     @Test
-    public void addKVExpired() {
-        String k = "zhouang";
-        String v = "123456";
-        redisService.addKVExpired(k, v, 10);
+    public void sAdd() {
+        String name1 = "zhou";
+        String name2 = "zhang";
+        String name3 = "mo";
+        redisService.sAdd("praiseDemo", name1, name2, name3);
+
+
     }
 }
