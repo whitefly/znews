@@ -5,6 +5,8 @@ public class RedisKeyUtil {
     private static String Like = "LIKE";
     private static String DisLike = "DISLIKE";
 
+    private static String EventQueueKey = "Event_Queue_Key";
+
 
     public static String getLikeKey(int entityType, int entityID) {
         // 生成某个回答赞同的唯一id
@@ -14,6 +16,10 @@ public class RedisKeyUtil {
     public static String getDisLikeKey(int entityType, int entityID) {
         // 生成某个回答赞同的唯一id
         return DisLike + SplitTag + String.valueOf(entityType) + SplitTag + String.valueOf(entityID);
+    }
+
+    public static String getEventQueueKey() {
+        return EventQueueKey;
     }
 
 

@@ -11,6 +11,7 @@ import java.util.Random;
 public class UserUtil {
 
     public static int ANONYMOUS_ID = 4;
+    public static int SYSTEM_ID = 2;
 
     static private final String imageFoler = "static/images/res";
     static private List<String> imageUrls;

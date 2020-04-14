@@ -1,12 +1,16 @@
 package com.example.znews.utils;
 
+import com.example.znews.async.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RedisAdapter {
@@ -15,13 +19,14 @@ public class RedisAdapter {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    public void sAdd(String k, String... value) {
+    public Long sAdd(String k, String... value) {
         // 在set增加
         try {
             SetOperations<String, String> sso = redisTemplate.opsForSet();
-            sso.add(k, value);
+            return sso.add(k, value);
         } catch (Exception e) {
             logger.error("redis set 插入错误", e);
+            return -1L;
         }
     }
 
@@ -62,6 +67,16 @@ public class RedisAdapter {
         ValueOperations operations = redisTemplate.opsForValue();
         Object o = operations.get(k);
         return o == null ? null : (String) o;
+    }
+
+    public void lPush(String key, String element) {
+        ListOperations<String, String> sso = redisTemplate.opsForList();
+        sso.leftPush(key, element);
+    }
+
+    public String rPop(String key) {
+        ListOperations<String, String> sso = redisTemplate.opsForList();
+        return sso.rightPop(key, 0, TimeUnit.SECONDS);
     }
 
 

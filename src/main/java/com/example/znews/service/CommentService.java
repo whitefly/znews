@@ -46,4 +46,8 @@ public class CommentService {
         return commentDao.findCommentsByEntity(CommentType.ENTITY_QUESTION, question.getId());
     }
 
+    public Comment getCommentById(int id) {
+        return commentDao.findCommentById(id);
+    }
+
 }

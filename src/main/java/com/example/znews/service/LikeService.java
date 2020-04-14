@@ -3,6 +3,7 @@ package com.example.znews.service;
 import com.example.znews.model.User;
 import com.example.znews.utils.RedisAdapter;
 import com.example.znews.utils.RedisKeyUtil;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,10 @@ public class LikeService {
 
         //添加喜欢
         String likeEntityKey = RedisKeyUtil.getLikeKey(entityType, entityID);
-        redisAdapter.sAdd(likeEntityKey, String.valueOf(userId));
+        Long aLong = redisAdapter.sAdd(likeEntityKey, String.valueOf(userId));
+        if (aLong == null || aLong == 0) {
+            throw new ValueException(likeEntityKey + ":未插入set成功");
+        }
         //删除不喜欢
         String dislikeEntityKey = RedisKeyUtil.getDisLikeKey(entityType, entityID);
         redisAdapter.sRemove(dislikeEntityKey, String.valueOf(userId));

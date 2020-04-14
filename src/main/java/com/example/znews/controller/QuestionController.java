@@ -76,7 +76,7 @@ public class QuestionController {
             vo.put("user", user);
             vo.put("comment", item);
             //回答赞的个数
-            long likeCount = likeService.getLikeCount(item.getEntityType(), item.getUserId());
+            long likeCount = likeService.getLikeCount(item.getEntityType(), item.getEntityId());
             vo.put("likeCount", likeCount);
 
             //登录用户赞的状态
