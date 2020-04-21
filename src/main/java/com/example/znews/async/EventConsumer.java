@@ -66,7 +66,7 @@ public class EventConsumer implements InitializingBean {
                             }
                         }
                     } catch (QueryTimeoutException e) {
-                        logger.error("超时:从redis的队列中取出事件超时", e);
+                        logger.error("超时:从redis的队列中取出事件超时");
                     }
                 }
             }

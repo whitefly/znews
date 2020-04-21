@@ -4,13 +4,11 @@ import com.example.znews.async.EventModel;
 import com.example.znews.async.EventProducer;
 import com.example.znews.async.EventType;
 import com.example.znews.model.Comment;
-import com.example.znews.model.CommentType;
+import com.example.znews.model.EntityType;
 import com.example.znews.model.HostHolder;
 import com.example.znews.model.User;
 import com.example.znews.service.CommentService;
 import com.example.znews.service.LikeService;
-import com.example.znews.service.MessageService;
-import com.example.znews.utils.MessageUtil;
 import com.example.znews.utils.QuestionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,7 +74,7 @@ public class LikeController {
                 return QuestionUtil.getCodeJson(999);
             }
 
-            long dislikeCount = likeService.dislike(CommentType.ENTITY_ANSWER, Integer.parseInt(commentId), user.getId());
+            long dislikeCount = likeService.dislike(EntityType.ENTITY_ANSWER, Integer.parseInt(commentId), user.getId());
             return QuestionUtil.getCodeJson(0, String.valueOf(dislikeCount));
         } catch (Exception e) {
             return QuestionUtil.getCodeJson(-1, "some error exist");

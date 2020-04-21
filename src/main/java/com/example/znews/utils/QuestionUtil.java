@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuestionUtil {
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     static public String getCodeJson(int code, String msg) {
 

@@ -1,7 +1,7 @@
 package com.example.znews.controller;
 
 import com.example.znews.model.Comment;
-import com.example.znews.model.CommentType;
+import com.example.znews.model.EntityType;
 import com.example.znews.model.HostHolder;
 import com.example.znews.model.User;
 import com.example.znews.service.CommentService;
@@ -37,7 +37,7 @@ public class CommentController {
             comment.setCreatedDate(new Date());
             comment.setContent(content);
             comment.setUserId(user.getId());
-            comment.setEntityType(CommentType.ENTITY_QUESTION);
+            comment.setEntityType(EntityType.ENTITY_QUESTION);
             comment.setEntityId(questionId);
             commentService.addComment(comment);
         } catch (Exception e) {

@@ -1,15 +1,13 @@
 package com.example.znews.utils;
 
-import com.example.znews.async.EventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.SetOperations;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -79,5 +77,54 @@ public class RedisAdapter {
         return sso.rightPop(key, 0, TimeUnit.SECONDS);
     }
 
+    public Boolean zAdd(String key, String value, double weight) {
+        try {
+            ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+            Boolean add = zo.add(key, value, weight);
+            return add;
+        } catch (Exception e) {
+            logger.error("redis set 查询错误", e);
+            return false;
+        }
+    }
 
+    public Long zRemove(String key, String value) {
+        try {
+            ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+            return zo.remove(key, value);
+        } catch (Exception e) {
+            logger.error("redis set 查询错误", e);
+            return -1L;
+        }
+    }
+
+    public Set<String> zRange(String key, long start, long end) {
+        try {
+            ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+            return zo.range(key, start, end);
+        } catch (Exception e) {
+            logger.error("redis set 查询错误", e);
+            return new HashSet<>();
+        }
+    }
+
+    public Set<String> ZRevRange(String key, long start, long end) {
+        try {
+            ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+            return zo.reverseRange(key, start, end);
+        } catch (Exception e) {
+            logger.error("redis set 查询错误", e);
+            return new HashSet<>();
+        }
+    }
+
+    public Long zCard(String key) {
+        ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+        return zo.zCard(key);
+    }
+
+    public Double zScore(String key, String name) {
+        ZSetOperations<String, String> zo = redisTemplate.opsForZSet();
+        return zo.score(key, name);
+    }
 }

@@ -86,5 +86,15 @@ public class EventModel {
         return this;
     }
 
-
+    @Override
+    public String toString() {
+        return "EventModel{" +
+                "eventType=" + eventType +
+                ", entityType=" + entityType +
+                ", entityId=" + entityId +
+                ", actorId=" + actorId +
+                ", entityOwnerId=" + entityOwnerId +
+                ", extents=" + extents +
+                '}';
+    }
 }

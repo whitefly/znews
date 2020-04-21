@@ -8,7 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -22,6 +26,9 @@ public class RedisServiceTest {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
 
     @Test
@@ -44,7 +51,17 @@ public class RedisServiceTest {
         String name2 = "zhang";
         String name3 = "mo";
         redisService.sAdd("praiseDemo", name1, name2, name3);
+    }
 
 
+    @Test
+    public void multiTest() {
+//        stringRedisTemplate.setEnableTransactionSupport(true);
+        stringRedisTemplate.multi();
+        ValueOperations vo = stringRedisTemplate.opsForValue();
+        vo.set("hehe", "ysw");
+        vo.set("fuck", "ysw");
+        int i = 1 / 0;
+        stringRedisTemplate.exec();
     }
 }

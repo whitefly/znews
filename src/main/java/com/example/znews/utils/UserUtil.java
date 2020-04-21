@@ -14,8 +14,8 @@ public class UserUtil {
     public static int SYSTEM_ID = 2;
 
     static private final String imageFoler = "static/images/res";
-    static private List<String> imageUrls;
-    static private Random random;
+    static private final List<String> imageUrls;
+    static private final Random random;
 
     static {
         random = new Random();

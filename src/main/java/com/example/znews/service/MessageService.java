@@ -3,14 +3,10 @@ package com.example.znews.service;
 import com.example.znews.dao.CommentDao;
 import com.example.znews.dao.MessageDao;
 import com.example.znews.dao.QuestionDao;
-import com.example.znews.model.Comment;
-import com.example.znews.model.CommentType;
 import com.example.znews.model.Message;
-import com.example.znews.model.Question;
 import com.example.znews.utils.SensitiveWordsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
