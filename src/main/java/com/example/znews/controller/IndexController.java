@@ -1,7 +1,9 @@
 package com.example.znews.controller;
 
+import com.example.znews.model.EntityType;
 import com.example.znews.model.Question;
 import com.example.znews.model.User;
+import com.example.znews.service.LikeService;
 import com.example.znews.service.LoginService;
 import com.example.znews.service.QuestionService;
 import com.example.znews.service.UserService;
@@ -23,11 +25,14 @@ public class IndexController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
+
+    @Autowired
+    private LikeService likeService;
 
 
     @GetMapping(path = "/")
@@ -38,6 +43,7 @@ public class IndexController {
             int userId = q.getUserId();
             User user = userService.findUserById(userId);
             Map<String, Object> vo = new HashMap<>();
+            //问题的获赞数量
             vo.put("question", q);
             vo.put("user", user);
             vos.add(vo);

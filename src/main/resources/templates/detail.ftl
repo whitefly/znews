@@ -5,7 +5,12 @@
       style="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" async="" src="/scripts/za-0.1.1.min.js"></script>
+    <script type="text/javascript"  src="/scripts/main/jquery.js"></script>
+    <script type="text/javascript" async=""  src="/scripts/za-0.1.1.min.js"></script>
+    <script type="text/javascript"  src="/scripts/main/base/base.js"></script>
+    <script type="text/javascript"  src="/scripts/main/base/util.js"></script>
+    <script type="text/javascript"  src="/scripts/main/base/event.js"></script>
+    <script type="text/javascript"  src="/scripts/main/util/action.js"></script>
     <script async="" src="https://ssl.google-analytics.com/ga.js"></script>
 
 
@@ -82,30 +87,15 @@
                                      class="zm-item-img-avatar"></a>
                             <a class="zm-item-link-avatar" href="">
                                 <img src="../images/res/da8e974dc_s.jpg" class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/19456ebfe8b207320735f282769ac635_s.jpg"
-                                     class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/11be4a90ed938abfbab4899df56ee754_s.png"
-                                     class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/da8e974dc_s.jpg" class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/d207854fffc9e0289fbd6bbbb3986988_s.jpg"
-                                     class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/1ac7840eeb19ada0bbf85f51702d5784_s.jpg"
-                                     class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/da8e974dc_s.jpg" class="zm-item-img-avatar"></a>
                         </div>
                     </div>
                 </div>
             </div>
             <div id="zh-question-answer-wrap" class="zh-question-answer-wrapper navigable">
+
                 <#list  vos as vo>
                     <div class="zm-item-answer  zm-item-expanded">
-                        <div class="zm-votebar goog-scrollfloater js-vote" data-id="19">
+                        <div class="zm-votebar goog-scrollfloater js-vote" data-id="${vo["comment"].id}">
                             <button class="up js-like" title="赞同">
                                 <i class="icon vote-arrow"></i>
                                 <span class="count js-count">${vo["likeCount"]}</span>
@@ -116,18 +106,26 @@
                                 <span class="label sr-only">反对，不会显示你的姓名</span>
                             </button>
                         </div>
+                        <#--                        <script>-->
+                        <#--                            $(".up.js-like").click(function () {-->
+                        <#--                                let data_div = $(this).closest("div.zm-votebar.goog-scrollfloater.js-vote");-->
+                        <#--                                let rnt=data_div.attr("data-id");-->
+                        <#--                                alert(rnt);-->
+                        <#--                            })-->
+                        <#--                        </script>-->
                         <div class="answer-head">
                             <div class="zm-item-answer-author-info">
                                 <a class="zm-item-link-avatar avatar-link" href="" target="_blank">
                                     <img src="../images/res/${vo["user"].headUrl}"
                                          class="zm-list-avatar avatar">
                                 </a>
-                                <a class="author-link" target="_blank" href="/user/${vo["user"].id}">${vo["user"].name}</a>
+                                <a class="author-link" target="_blank"
+                                   href="/user/${vo["user"].id}">${vo["user"].name}</a>
                             </div>
                             <div class="zm-item-vote-info">
                                 <span class="voters text">
                                     <a href="" class="more text"><span
-                                                class="js-voteCount">28</span>&nbsp;人赞同</a></span>
+                                                class="js-voteCount">${vo["likeCount"]}</span>&nbsp;人赞同</a></span>
                             </div>
                         </div>
                         <div class="zm-item-rich-text expandable js-collapse-body">
@@ -151,44 +149,55 @@
             </div>
             <div id="zh-question-answer-form-wrap" class="zh-question-answer-form-wrap">
                 <#if user??>
-                <div class="zm-editable-editor-wrap" style="">
-                    <div class="zh-answer-form clearfix">
-                        <a href="/user/${user.id}" title="${user.name}" class="zm-item-link-avatar">
-                            <img src="../images/res/${user.headUrl}" class="zm-list-avatar">
-                        </a>
-                        <div class="zu-answer-form-title">
-                            <a href="/user/${user.id}" title="${user.name}">${user.name}</a>
-                            <span>
+                    <div class="zm-editable-editor-wrap" style="">
+                        <div class="zh-answer-form clearfix">
+                            <a href="/user/${user.id}" title="${user.name}" class="zm-item-link-avatar">
+                                <img src="../images/res/${user.headUrl}" class="zm-list-avatar">
+                            </a>
+                            <div class="zu-answer-form-title">
+                                <a href="/user/${user.id}" title="${user.name}">${user.name}</a>
+                                <span>
                                     <a name="edit_bio" class="zu-edit-button" href="question/36301524#">
                                         <i class="zu-edit-button-icon"></i>填写话题经验，提升回答可信度</a>
                                 </span>
-                        </div>
-                    </div>
-                    <div class="zm-editable-editor-outer">
-                        <div class="zm-editable-editor-field-wrap">
-                            <div id="mock:f" class="zm-editable-editor-field-element editable" g_editable="true"
-                                 role="textbox" contenteditable="true" style="font-style: italic;">
-                                <p>
-                                    <span style="font-style: normal;color: #999;">写回答...</span>
-                                </p>
                             </div>
+                        </div>
+                        <div class="zm-editable-editor-outer">
+                            <div class="zm-editable-editor-field-wrap">
+                                <div id="mock:f" class="zm-editable-editor-field-element editable" g_editable="true"
+                                     role="textbox" contenteditable="true" style="font-style: italic;">
+                                    <p>
+                                    <form id="answer_box" method="post" action="/comment/add">
+                                        <input type="hidden" name="questionId" value="${question.id}"/>
+                                        <input style="font-style: normal;color: #999;" type="text" name="content"
+                                               value="写回答...">
+                                    </form>
+                                    <#--                                    <span  id="answer_box">写回答...</span>-->
+                                    </p>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="zm-command clearfix">
+                            <label class="zg-left anno-box" style="-webkit-user-select: none;">
+                                <input name="anno-checkbox" type="checkbox" style="-webkit-user-select: none;">匿名
+                                <span style="-webkit-user-select: none;">&nbsp;</span></label>
+                            <label class="zg-left copyright-box">
+                                <input name="copyright-checkbox" type="checkbox">未经许可，禁止转载
+                                <a href="terms#sec-licence-6" target="_blank">
+                                    <i class="zg-icon zg-icon-question-mark" style="margin-left: 5px;"
+                                       id="copyright_question_mark"></i></a>
+                            </label>
+                            <span class=" zg-right">
+                            <script>
+
+                                let content = document.getElementById("answer_box");
+
+                            </script>
+                                <a class="submit-button zg-btn-blue" name="save"
+                                   onclick="document.getElementById('answer_box').submit();">发布回答</a></span>
                         </div>
                     </div>
-                    <div class="zm-command clearfix">
-                        <label class="zg-left anno-box" style="-webkit-user-select: none;">
-                            <input name="anno-checkbox" type="checkbox" style="-webkit-user-select: none;">匿名
-                            <span style="-webkit-user-select: none;">&nbsp;</span></label>
-                        <label class="zg-left copyright-box">
-                            <input name="copyright-checkbox" type="checkbox">未经许可，禁止转载
-                            <a href="terms#sec-licence-6" target="_blank">
-                                <i class="zg-icon zg-icon-question-mark" style="margin-left: 5px;"
-                                   id="copyright_question_mark"></i></a>
-                        </label>
-                        <span class=" zg-right">
-                                <a class="submit-button zg-btn-blue" name="save" href="javascript:">发布回答</a></span>
-                    </div>
-                </div>
                 <#else>
                     <span>
                                     <a name="edit_bio" class="zu-edit-button" href="/loginPage">
@@ -213,6 +222,49 @@
         <div class="stick"></div>
     </a>
 </div>
+
+<script>
+    var base = window.Base;
+    var Action = base.getClass("main.util.Action");
+    //点赞函数绑定
+    $(".up.js-like").click(function () {
+            let data_div = $(this).closest("div.zm-votebar.goog-scrollfloater.js-vote");
+            let rnt = data_div.attr("data-id").toString();
+            //绑定点赞函数
+            let like_params = {
+                commentId: rnt,
+                call: function () {
+                    alert("点赞成功")
+                },
+                error: function (result) {
+                    alert(result.msg)
+                },
+                always: function () {
+                }
+            };
+            Action.like(like_params);
+        }
+    );
+    //反对函数绑定
+    $(".down.js-dislike").click(function () {
+            let data_div = $(this).closest("div.zm-votebar.goog-scrollfloater.js-vote");
+            let rnt = data_div.attr("data-id").toString();
+            //绑定点赞函数
+            let like_params = {
+                commentId: rnt,
+                call: function () {
+                    alert("反对成功")
+                },
+                error: function (result) {
+                    alert(result.msg)
+                },
+                always: function () {
+                }
+            };
+            Action.dislike(like_params);
+        }
+    );
+</script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" async="" src="/scripts/za-0.1.1.min.js"></script>
+    <script type="text/javascript" async="" src="/scripts/main/util/action.js"></script>
     <script async="" src="/scripts/ga.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
@@ -260,8 +261,9 @@
                                             <a target="_blank" class="post-link" href="/question/${vo["question"].id}">${vo["question"].title}</a>
                                         </h2>
                                         <div class="entry-body post-body js-collapse-body">
+
                                             <div class="zm-item-vote">
-                                                <a class="zm-item-vote-count js-expand js-vote-count" href="#">1082</a>
+                                                <a class="zm-item-vote-count js-expand js-vote-count" href="">0</a>
                                             </div>
                                             <div class="zm-votebar">
                                                 <button class="up" title="赞同">

@@ -37,7 +37,7 @@ public class CommentController {
             comment.setCreatedDate(new Date());
             comment.setContent(content);
             comment.setUserId(user.getId());
-            comment.setEntityType(EntityType.ENTITY_QUESTION);
+            comment.setEntityType(EntityType.ENTITY_QUESTION); //针对问题的评论->回答
             comment.setEntityId(questionId);
             commentService.addComment(comment);
         } catch (Exception e) {

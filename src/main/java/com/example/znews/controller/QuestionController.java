@@ -76,14 +76,14 @@ public class QuestionController {
             vo.put("user", user);
             vo.put("comment", item);
             //回答赞的个数
-            long likeCount = likeService.getLikeCount(item.getEntityType(), item.getEntityId());
+            long likeCount = likeService.getLikeCount(EntityType.ENTITY_ANSWER, item.getId());
             vo.put("likeCount", likeCount);
 
             //登录用户赞的状态
             if (loginUser == null) {
                 vo.put("liked", 0);
             } else {
-                vo.put("liked", likeService.getLikeStatus(item.getEntityType(), item.getEntityId(), loginUser.getId()));
+                vo.put("liked", likeService.getLikeStatus(EntityType.ENTITY_ANSWER, item.getId(), loginUser.getId()));
             }
             vos.add(vo);
         }

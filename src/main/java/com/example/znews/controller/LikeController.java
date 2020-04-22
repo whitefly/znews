@@ -35,10 +35,11 @@ public class LikeController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping(path = "/like/like")
+    @PostMapping(path = "/like")
     @ResponseBody
     public String like(@RequestParam("commentId") int commentId) {
         //点赞
+        logger.info("收到点赞请求:"+commentId);
         try {
             User user = hostHolder.getUser();
             if (user == null) {
@@ -46,7 +47,7 @@ public class LikeController {
             }
             Comment comment = commentService.getCommentById(commentId);
             //若重复点赞,这里会报错
-            long likeCount = likeService.like(comment.getEntityType(), comment.getEntityId(), user.getId());
+            long likeCount = likeService.like(EntityType.ENTITY_ANSWER, commentId, user.getId());
             //发通知,这里的'CommentId'必须设置,否则给用户的通知中无法找到对应的回答连接
 
             EventModel event = new EventModel(EventType.LIKE).
@@ -64,9 +65,9 @@ public class LikeController {
         }
     }
 
-    @PostMapping(path = "/like/dislike")
+    @PostMapping(path = "/dislike")
     @ResponseBody
-    public String dislike(@RequestParam("commentId") String commentId) {
+    public String dislike(@RequestParam("commentId") int commentId) {
         //点赞
         try {
             User user = hostHolder.getUser();
@@ -74,7 +75,7 @@ public class LikeController {
                 return QuestionUtil.getCodeJson(999);
             }
 
-            long dislikeCount = likeService.dislike(EntityType.ENTITY_ANSWER, Integer.parseInt(commentId), user.getId());
+            long dislikeCount = likeService.dislike(EntityType.ENTITY_ANSWER, commentId, user.getId());
             return QuestionUtil.getCodeJson(0, String.valueOf(dislikeCount));
         } catch (Exception e) {
             return QuestionUtil.getCodeJson(-1, "some error exist");

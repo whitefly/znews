@@ -47,13 +47,13 @@
         <div id="zg-top-nav" class="zu-top-nav">
             <ul class="zu-top-nav-ul zg-clear">
                 <li class="zu-top-nav-li current" id="zh-top-nav-home">
-                    <a class="zu-top-nav-link" href="https://nowcoder.com/" id="zh-top-link-home">首页</a>
+                    <a class="zu-top-nav-link" href="/" id="zh-top-link-home">首页</a>
                 </li>
                 <li class="zu-top-nav-li " id="zh-top-nav-explore">
                     <a class="zu-top-nav-link" href="https://nowcoder.com/explore">发现</a>
                 </li>
                 <li class="top-nav-noti zu-top-nav-li ">
-                    <a class="zu-top-nav-link" href="javascript:;" id="zh-top-nav-count-wrap" role="button">
+                    <a class="zu-top-nav-link" href="/message/list" id="zh-top-nav-count-wrap" role="button">
                         <span class="mobi-arrow"></span>消息
                         <span id="zh-top-nav-count" class="zu-top-nav-count zg-noti-number" style="display: none;">0</span>
                     </a>
