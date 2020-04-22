@@ -54,7 +54,7 @@ public class LoginController {
         } else {
             //登录失败
             model.addAttribute("msg", map.get("msg"));
-            return "login";
+            return "/loginPage";
         }
     }
 
