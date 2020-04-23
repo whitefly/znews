@@ -62,4 +62,12 @@ public class QuestionDaoTest {
         Assert.assertEquals(1, questionDao.plusCommentCount(id));
 
     }
+
+    @Test
+    public void findQuestionsByUserId() {
+        int userId = 4;
+        List<Question> questionsByUserId = questionDao.findQuestionsByUserId(userId);
+        Assert.assertEquals(7, questionsByUserId.size());
+
+    }
 }

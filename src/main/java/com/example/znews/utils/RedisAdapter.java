@@ -37,7 +37,7 @@ public class RedisAdapter {
         }
     }
 
-    public long sSize(String k) {
+    public Long sSize(String k) {
         // show the size of K
         try {
             SetOperations<String, String> sso = redisTemplate.opsForSet();
@@ -46,7 +46,7 @@ public class RedisAdapter {
         } catch (Exception e) {
             logger.error("redis set 查询错误", e);
         }
-        return 0;
+        return 0L;
     }
 
 

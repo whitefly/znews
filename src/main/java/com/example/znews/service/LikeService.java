@@ -26,13 +26,14 @@ public class LikeService {
         //添加喜欢
         String likeEntityKey = RedisKeyUtil.getLikeKey(entityType, entityID);
         Long aLong = redisAdapter.sAdd(likeEntityKey, String.valueOf(userId));
-        if (aLong == null || aLong == 0) {
-            throw new ValueException(likeEntityKey + ":未插入set成功");
+        if (aLong == 0) {
+            //用户点赞已经存在于列表中,表示表示取消点赞
+            redisAdapter.sRemove(likeEntityKey, String.valueOf(userId));
+        } else {
+            //首次点赞,删除不喜欢
+            String dislikeEntityKey = RedisKeyUtil.getDisLikeKey(entityType, entityID);
+            redisAdapter.sRemove(dislikeEntityKey, String.valueOf(userId));
         }
-        //删除不喜欢
-        String dislikeEntityKey = RedisKeyUtil.getDisLikeKey(entityType, entityID);
-        redisAdapter.sRemove(dislikeEntityKey, String.valueOf(userId));
-
         return redisAdapter.sSize(likeEntityKey);
     }
 

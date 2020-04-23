@@ -2,6 +2,8 @@ package com.example.znews.service;
 
 import com.example.znews.utils.RedisAdapter;
 import com.example.znews.utils.RedisKeyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.Set;
 
 @Service
 public class FollowService {
-
+    private static final Logger logger = LoggerFactory.getLogger(FollowService.class);
 
     @Autowired
     private RedisAdapter redisAdapter;
@@ -40,6 +42,7 @@ public class FollowService {
 
 
     public boolean unFollow(int userId, int entityType, int entityId) {
+
         //用户点击后关注某个用户或者实体.
         //设计到2个列表同时修改,so需要redis 的事务
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);

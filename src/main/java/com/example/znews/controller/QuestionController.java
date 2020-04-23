@@ -2,10 +2,7 @@ package com.example.znews.controller;
 
 
 import com.example.znews.model.*;
-import com.example.znews.service.CommentService;
-import com.example.znews.service.LikeService;
-import com.example.znews.service.QuestionService;
-import com.example.znews.service.UserService;
+import com.example.znews.service.*;
 import com.example.znews.utils.QuestionUtil;
 import com.example.znews.utils.UserUtil;
 import org.slf4j.Logger;
@@ -35,6 +32,9 @@ public class QuestionController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private FollowService followService;
+
 
     @PostMapping(path = "/question/add")
     @ResponseBody
@@ -63,8 +63,12 @@ public class QuestionController {
     @GetMapping(path = "/question/{id}")
     public String questionDetail(@PathVariable(name = "id") int id, Model model) {
         Question question = questionService.getQuestionById(id);
-        if (question == null) return "error/404";
+        if (question == null) return "error/questionNotExist";
         model.addAttribute("question", question);
+        //关注者的列表
+        List<Integer> followerIds = followService.getFollowers(EntityType.ENTITY_QUESTION, id);
+        model.addAttribute("followers", userService.findUsersById(followerIds));
+
         //问题下的回答
         List<Map<String, Object>> vos = new ArrayList<>();
         List<Comment> answers = commentService.getCommentByQuestion(question);

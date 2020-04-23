@@ -49,7 +49,6 @@ public class LikeController {
             //若重复点赞,这里会报错
             long likeCount = likeService.like(EntityType.ENTITY_ANSWER, commentId, user.getId());
             //发通知,这里的'CommentId'必须设置,否则给用户的通知中无法找到对应的回答连接
-
             EventModel event = new EventModel(EventType.LIKE).
                     setEntityType(comment.getEntityType()).
                     setEntityId(comment.getEntityId()).

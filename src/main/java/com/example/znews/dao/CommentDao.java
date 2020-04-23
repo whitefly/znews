@@ -19,8 +19,10 @@ public interface CommentDao {
     int deleteCommentById(int id, int status);
 
     boolean updateComment(Comment Comment);
-
+    //关于哪个entity的回答
     List<Comment> findCommentsByEntity(int entityType, int entityId);
+
+    List<Comment> findCommentsByUserId(int userId,int entityType);
 
 
 }

@@ -19,6 +19,8 @@ public interface QuestionDao {
 
     boolean updateQuestion(Question question);
 
+    List<Question> findQuestionsByUserId(@Param("userId") int userId);
+
     /*
     显示每页的问题
      */

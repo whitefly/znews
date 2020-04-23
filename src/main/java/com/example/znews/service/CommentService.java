@@ -5,6 +5,7 @@ import com.example.znews.dao.QuestionDao;
 import com.example.znews.model.Comment;
 import com.example.znews.model.EntityType;
 import com.example.znews.model.Question;
+import com.example.znews.model.User;
 import com.example.znews.utils.SensitiveWordsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,10 @@ public class CommentService {
 
     public Comment getCommentById(int id) {
         return commentDao.findCommentById(id);
+    }
+
+    public List<Comment> getAnswersByUser(User user) {
+        return commentDao.findCommentsByUserId(user.getId(), EntityType.ENTITY_QUESTION);
     }
 
 }

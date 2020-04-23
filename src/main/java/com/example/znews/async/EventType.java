@@ -11,7 +11,10 @@ public enum EventType {
 
     MAIL(3),
 
-    FOLLOW(4);
+    FOLLOW(4),
+
+    UNFOLLOW(5);
+
 
     private int value;
 

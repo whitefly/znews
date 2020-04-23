@@ -13,6 +13,19 @@
                         <i class="zg-icon zg-icon-dd-home"></i>我的主页
                     </a>
                 </li>
+
+                <li>
+                    <a href="/followees" tabindex="-1">
+                        <i class="zg-icon zg-icon-dd-home"></i>关注
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/followers" tabindex="-1">
+                        <i class="zg-icon zg-icon-dd-home"></i>粉丝
+                    </a>
+                </li>
+
                 <li>
                     <a href="/message/list">
                         <i class="zg-icon zg-icon-dd-pm"></i>私信
@@ -31,7 +44,12 @@
             </ul>
         </div>
         <#else>
-            <a class="name" href="/loginPage">登录/注册</a>
+            <script>
+                function jump() {
+                    window.location.href="/loginPage?next="+window.location.pathname
+                }
+            </script>
+            <a class="name" href="javascript:void(0)" onclick="jump()">登录/注册</a>
         </#if>
         <button class="zu-top-add-question" id="zu-top-add-question">提问</button>
         <div role="search" id="zh-top-search" class="zu-top-search">

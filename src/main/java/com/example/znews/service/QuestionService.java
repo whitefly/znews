@@ -2,6 +2,7 @@ package com.example.znews.service;
 
 import com.example.znews.dao.QuestionDao;
 import com.example.znews.model.Question;
+import com.example.znews.model.User;
 import com.example.znews.utils.QuestionUtil;
 import com.example.znews.utils.SensitiveWordsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class QuestionService {
         return questionDao.findQuestionById(id);
     }
 
+    public List<Question> getQuestionByUser(User user) {
+        return questionDao.findQuestionsByUserId(user.getId());
+    }
+
     public boolean addQuestion(Question question) {
         //js字符转义
         question.setTitle(HtmlUtils.htmlEscape(question.getTitle()));
@@ -39,4 +44,6 @@ public class QuestionService {
         question.setContent(sensitiveWordsUtil.filter(question.getContent()));
         return questionDao.insertQuestion(question) > 0;
     }
+
+
 }

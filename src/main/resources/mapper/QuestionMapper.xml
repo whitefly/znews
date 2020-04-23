@@ -15,6 +15,14 @@
         where id = #{id};
     </select>
 
+    <select id="findQuestionsByUserId" resultType="com.example.znews.model.Question">
+        select * from
+        <include refid="tableName"></include>
+        where user_id = #{userId};
+    </select>
+
+
+
     <insert id="insertQuestion" useGeneratedKeys="true">
         insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
         values(#{title},#{content},#{userId},#{createdDate},#{commentCount})

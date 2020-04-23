@@ -1,6 +1,8 @@
 package com.example.znews.dao;
 
 import com.example.znews.model.Comment;
+import com.example.znews.model.EntityType;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,13 @@ public class CommentDaoTest {
         int id = 21;
         List<Comment> commentsByEntity = commentDao.findCommentsByEntity(type, id);
         System.out.println(commentsByEntity);
+    }
+
+    @Test
+    public void findCommentsByUserId() {
+        int userId=51;
+        int entityType= EntityType.ENTITY_QUESTION;
+        List<Comment> result = commentDao.findCommentsByUserId(userId, entityType);
+        Assert.assertEquals(1,result.size());
     }
 }

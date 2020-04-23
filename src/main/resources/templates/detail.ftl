@@ -5,12 +5,12 @@
       style="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript"  src="/scripts/main/jquery.js"></script>
-    <script type="text/javascript" async=""  src="/scripts/za-0.1.1.min.js"></script>
-    <script type="text/javascript"  src="/scripts/main/base/base.js"></script>
-    <script type="text/javascript"  src="/scripts/main/base/util.js"></script>
-    <script type="text/javascript"  src="/scripts/main/base/event.js"></script>
-    <script type="text/javascript"  src="/scripts/main/util/action.js"></script>
+    <script type="text/javascript" src="/scripts/main/jquery.js"></script>
+    <script type="text/javascript" async="" src="/scripts/za-0.1.1.min.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/base.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/util.js"></script>
+    <script type="text/javascript" src="/scripts/main/base/event.js"></script>
+    <script type="text/javascript" src="/scripts/main/util/action.js"></script>
     <script async="" src="https://ssl.google-analytics.com/ga.js"></script>
 
 
@@ -59,7 +59,7 @@
             </div>
             <div class="zm-side-section">
                 <div class="zm-side-section-inner" id="zh-question-side-header-wrap">
-                    <button class="follow-button zg-follow zg-btn-green js-follow">关注问题</button>
+                    <button class="follow-button zg-follow zg-btn-green js-follow" data-id="${question.id}">关注问题</button>
                     <div class="zg-btn-white goog-inline-block goog-menu-button" id="zh-question-operation-menu"
                          style="-webkit-user-select: none;">
                         <div class="goog-inline-block goog-menu-button-outer-box">
@@ -75,18 +75,16 @@
                     <div class="zh-question-followers-sidebar">
                         <div class="zg-gray-normal">
                             <a href="">
-                                <strong>9</strong>
+                                <strong>${followers?size}</strong>
                             </a>人关注该问题
                         </div>
                         <div class="list zu-small-avatar-list zg-clear">
-                                <span class="zm-item-link-avatar">
-                                    <img title="匿名用户" class="zm-item-img-avatar"
-                                         src="../images/res/aadd7b895_s.jpg"></span>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/6ceea810748d179f57cac0baa5cf9592_s.jpg"
+                            <#list  followers as follower>
+                            <a class="zm-item-link-avatar" href="/user/${follower.id}">
+
+                                <img src="../images/res/${follower.headUrl}"
                                      class="zm-item-img-avatar"></a>
-                            <a class="zm-item-link-avatar" href="">
-                                <img src="../images/res/da8e974dc_s.jpg" class="zm-item-img-avatar"></a>
+                            </#list>
                         </div>
                     </div>
                 </div>
@@ -124,8 +122,10 @@
                             </div>
                             <div class="zm-item-vote-info">
                                 <span class="voters text">
-                                    <a href="" class="more text"><span
-                                                class="js-voteCount">${vo["likeCount"]}</span>&nbsp;人赞同</a></span>
+                                    <a href="" class="more text">
+                                        <span
+                                                class="js-voteCount">${vo["likeCount"]}
+                                        </span>&nbsp;人赞同</a></span>
                             </div>
                         </div>
                         <div class="zm-item-rich-text expandable js-collapse-body">
@@ -230,14 +230,24 @@
     $(".up.js-like").click(function () {
             let data_div = $(this).closest("div.zm-votebar.goog-scrollfloater.js-vote");
             let rnt = data_div.attr("data-id").toString();
+            let count_span = $(this).find("span.count.js-count");
+            let count_span2 = $(this).closest("div.zm-item-answer.zm-item-expanded").find("span.js-voteCount");
+            let url = window.location.pathname;
             //绑定点赞函数
             let like_params = {
                 commentId: rnt,
-                call: function () {
-                    alert("点赞成功")
+                call: function (result) {
+                    //更新点赞数
+                    let  like_count=result.msg
+                    count_span.html(like_count)
+                    count_span2.html(like_count)
                 },
                 error: function (result) {
-                    alert(result.msg)
+                    console.log(result.code)
+                    if (result.code === 999) {
+                        window.location.href = "/loginPage?next=" + url;
+                    }
+                    //转跳到登录界面
                 },
                 always: function () {
                 }
@@ -245,18 +255,18 @@
             Action.like(like_params);
         }
     );
-    //反对函数绑定
+    //反对点赞函数绑定
     $(".down.js-dislike").click(function () {
             let data_div = $(this).closest("div.zm-votebar.goog-scrollfloater.js-vote");
             let rnt = data_div.attr("data-id").toString();
             //绑定点赞函数
             let like_params = {
                 commentId: rnt,
-                call: function () {
-                    alert("反对成功")
+                call: function (result) {
+
                 },
                 error: function (result) {
-                    alert(result.msg)
+                    console.log(result.msg)
                 },
                 always: function () {
                 }
@@ -264,6 +274,25 @@
             Action.dislike(like_params);
         }
     );
+    //关注问题函数绑定
+    $("button.follow-button.zg-follow.zg-btn-green.js-follow").click(function () {
+        let questionId=$(this).attr("data-id").toString();
+        let follow_params={
+            questionId:questionId,
+            call: function (result) {
+                    //修改人数和头像
+                let num_position=$("div.zh-question-followers-sidebar strong")
+                num_position.html(result.msg)
+            },
+            error: function (result) {
+                console.log(result.msg)
+            },
+            always: function () {
+            }
+
+        }
+        Action.followQuestion(follow_params)
+    })
 </script>
 
 </body>
