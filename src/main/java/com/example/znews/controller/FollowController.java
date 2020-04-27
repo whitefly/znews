@@ -1,6 +1,5 @@
 package com.example.znews.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.example.znews.async.EventModel;
 import com.example.znews.async.EventProducer;
 import com.example.znews.async.EventType;
@@ -9,7 +8,7 @@ import com.example.znews.service.CommentService;
 import com.example.znews.service.FollowService;
 import com.example.znews.service.QuestionService;
 import com.example.znews.service.UserService;
-import com.example.znews.utils.QuestionUtil;
+import com.example.znews.utils.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +54,7 @@ public class FollowController {
 
         User user = hostHolder.getUser();
         if (user == null) {
-            return QuestionUtil.getCodeJson(999);
+            return ResponseUtil.getCodeJson(999);
         }
 
         try {
@@ -72,13 +71,13 @@ public class FollowController {
                         setEventType(EventType.FOLLOW);
                 eventProducer.produceEvent(event);
                 //返回关注者人数
-                return QuestionUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_USER, userId)));
+                return ResponseUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_USER, userId)));
             } else {
-                return QuestionUtil.getCodeJson(-1);
+                return ResponseUtil.getCodeJson(-1);
             }
         } catch (Exception e) {
             logger.error("关注用户出错", e);
-            return QuestionUtil.getCodeJson(-1);
+            return ResponseUtil.getCodeJson(-1);
         }
     }
 
@@ -87,7 +86,7 @@ public class FollowController {
     public String unFollowUser(@RequestParam("userId") int userId) {
         User user = hostHolder.getUser();
         if (user == null) {
-            return QuestionUtil.getCodeJson(999);
+            return ResponseUtil.getCodeJson(999);
         }
         try {
             logger.info("用户[{}] 取消关注 用户[{}]", user.getId(), userId);
@@ -103,13 +102,13 @@ public class FollowController {
                         setEventType(EventType.UNFOLLOW);
                 eventProducer.produceEvent(event);
                 //返回关注者人数
-                return QuestionUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_USER, userId)));
+                return ResponseUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_USER, userId)));
             } else {
-                return QuestionUtil.getCodeJson(-1);
+                return ResponseUtil.getCodeJson(-1);
             }
         } catch (Exception e) {
             logger.error("关注用户出错", e);
-            return QuestionUtil.getCodeJson(-1);
+            return ResponseUtil.getCodeJson(-1);
         }
     }
 
@@ -118,22 +117,28 @@ public class FollowController {
     public String followQuestion(@RequestParam("questionId") int questionId) {
         User user = hostHolder.getUser();
         if (user == null) {
-            return QuestionUtil.getCodeJson(999);
+            return ResponseUtil.getCodeJson(999);
         }
         try {
             //关注对应id用户
             logger.info("用户[{}] 关注了 问题[{}]", user.getId(), questionId);
-            // TODO: 2020/4/23 此处应该发送一个follow消息,但是不知道怎么处理
             boolean flag = followService.follow(user.getId(), EntityType.ENTITY_QUESTION, questionId);
             if (flag) {
                 //返回关注者人数
-                return QuestionUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_QUESTION, questionId)));
+                EventModel event = new EventModel();
+                event.setActorId(user.getId()).
+                        setEntityType(EntityType.ENTITY_QUESTION).
+                        setEntityId(questionId).
+                        setEventType(EventType.FOLLOW);
+                eventProducer.produceEvent(event);
+
+                return ResponseUtil.getCodeJson(0, String.valueOf(followService.getFollowerCount(EntityType.ENTITY_QUESTION, questionId)));
             } else {
-                return QuestionUtil.getCodeJson(-1);
+                return ResponseUtil.getCodeJson(-1);
             }
         } catch (Exception e) {
             logger.error("关注问题出错", e);
-            return QuestionUtil.getCodeJson(-1);
+            return ResponseUtil.getCodeJson(-1);
         }
     }
 

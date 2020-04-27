@@ -15,6 +15,12 @@
                 </li>
 
                 <li>
+                    <a href="/feeds" tabindex="-1">
+                        <i class="zg-icon zg-icon-dd-home"></i>新鲜事
+                    </a>
+                </li>
+
+                <li>
                     <a href="/followees" tabindex="-1">
                         <i class="zg-icon zg-icon-dd-home"></i>关注
                     </a>

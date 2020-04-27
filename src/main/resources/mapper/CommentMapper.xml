@@ -14,7 +14,7 @@
         where id = #{id};
     </select>
 
-    <insert id="insertComment" useGeneratedKeys="true">
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
         values(#{content},#{userId},#{createdDate},#{entityId},#{entityType},#{status})
     </insert>

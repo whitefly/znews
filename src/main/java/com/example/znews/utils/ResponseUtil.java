@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestionUtil {
+public class ResponseUtil {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     static public String getCodeJson(int code, String msg) {

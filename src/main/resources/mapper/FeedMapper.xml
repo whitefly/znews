@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.znews.dao.FeedDao">
+    <sql id="tableName">feed</sql>
+    <sql id="insertFields">'created_date','user_id','data','type'</sql>
+    <sql id="selectFields">'id','created_date','user_id','data','type'</sql>
+
+
+    <select id="selectUserFeeds" resultType="com.example.znews.model.Feed">
+        select * from
+        <include refid="tableName"></include>
+        where id &lt; #{maxId}
+        <if test="userIds!=null and userIds.size()!=0">
+            and user_id in
+            <foreach item="item" index="index" collection="userIds"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        LIMIT #{count}
+
+    </select>
+
+</mapper>

@@ -22,19 +22,18 @@ public class LikeService {
 
     public long like(int entityType, int entityID, int userId) {
         //将点赞的用户加入到redis对应的set中
-
-        //添加喜欢
         String likeEntityKey = RedisKeyUtil.getLikeKey(entityType, entityID);
         Long aLong = redisAdapter.sAdd(likeEntityKey, String.valueOf(userId));
-        if (aLong == 0) {
-            //用户点赞已经存在于列表中,表示表示取消点赞
-            redisAdapter.sRemove(likeEntityKey, String.valueOf(userId));
-        } else {
-            //首次点赞,删除不喜欢
-            String dislikeEntityKey = RedisKeyUtil.getDisLikeKey(entityType, entityID);
-            redisAdapter.sRemove(dislikeEntityKey, String.valueOf(userId));
-        }
+        //首次点赞,删除不喜欢
+        String dislikeEntityKey = RedisKeyUtil.getDisLikeKey(entityType, entityID);
+        redisAdapter.sRemove(dislikeEntityKey, String.valueOf(userId));
         return redisAdapter.sSize(likeEntityKey);
+    }
+
+    public void cancelLike(int entityType, int entityID, int userId) {
+        String likeEntityKey = RedisKeyUtil.getLikeKey(entityType, entityID);
+        Long aLong = redisAdapter.sAdd(likeEntityKey, String.valueOf(userId));
+        redisAdapter.sRemove(likeEntityKey, String.valueOf(userId));
     }
 
     public long dislike(int entityType, int entityID, int userId) {

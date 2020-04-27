@@ -1,10 +1,12 @@
 package com.example.znews.controller;
 
 
+import com.example.znews.async.EventModel;
+import com.example.znews.async.EventProducer;
+import com.example.znews.async.EventType;
 import com.example.znews.model.*;
 import com.example.znews.service.*;
-import com.example.znews.utils.QuestionUtil;
-import com.example.znews.utils.UserUtil;
+import com.example.znews.utils.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,28 +37,36 @@ public class QuestionController {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
 
     @PostMapping(path = "/question/add")
     @ResponseBody
     public String addQuestion(@RequestParam(name = "title") String title,
                               @RequestParam(name = "content") String content) {
-
+        User user = hostHolder.getUser();
+        if (user == null) {
+            return ResponseUtil.getCodeJson(999);
+        }
         try {
             Question q = new Question();
             q.setTitle(title);
             q.setContent(content);
-            //判断提问时,用户是否登录
-            User user = hostHolder.getUser();
-            q.setUserId(user != null ? user.getId() : UserUtil.ANONYMOUS_ID);
-
+            //提问时,用户是否登录
+            q.setUserId(user.getId());
             q.setCommentCount(0);
             q.setCreatedDate(new Date());
-
-            boolean rnt = questionService.addQuestion(q);
-            return rnt ? QuestionUtil.getCodeJson(0, "") : QuestionUtil.getCodeJson(1, "问题");
+            int id = questionService.addQuestion(q);
+            if (id > 0) {
+                EventModel eventModel = new EventModel().setEventType(EventType.QUESTION).setEntityType(EntityType.ENTITY_QUESTION).setEntityId(id).setActorId(user.getId()).setEntityOwnerId(user.getId());
+                eventProducer.produceEvent(eventModel);
+                return ResponseUtil.getCodeJson(0);
+            }
+            return ResponseUtil.getCodeJson(1, "添加问题失败");
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return QuestionUtil.getCodeJson(1, "添加问题失败:" + e.toString());
+            return ResponseUtil.getCodeJson(1, "添加问题失败:" + e.toString());
         }
     }
 
@@ -82,7 +92,6 @@ public class QuestionController {
             //回答赞的个数
             long likeCount = likeService.getLikeCount(EntityType.ENTITY_ANSWER, item.getId());
             vo.put("likeCount", likeCount);
-
             //登录用户赞的状态
             if (loginUser == null) {
                 vo.put("liked", 0);

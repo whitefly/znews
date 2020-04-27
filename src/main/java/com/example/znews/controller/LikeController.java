@@ -9,7 +9,7 @@ import com.example.znews.model.HostHolder;
 import com.example.znews.model.User;
 import com.example.znews.service.CommentService;
 import com.example.znews.service.LikeService;
-import com.example.znews.utils.QuestionUtil;
+import com.example.znews.utils.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,28 +39,36 @@ public class LikeController {
     @ResponseBody
     public String like(@RequestParam("commentId") int commentId) {
         //点赞
-        logger.info("收到点赞请求:"+commentId);
+        logger.info("收到点赞请求:" + commentId);
         try {
             User user = hostHolder.getUser();
             if (user == null) {
-                return QuestionUtil.getCodeJson(999);
+                return ResponseUtil.getCodeJson(999);
             }
             Comment comment = commentService.getCommentById(commentId);
             //若重复点赞,这里会报错
-            long likeCount = likeService.like(EntityType.ENTITY_ANSWER, commentId, user.getId());
+            int likeStatus = likeService.getLikeStatus(EntityType.ENTITY_ANSWER, commentId, user.getId());
+            if (likeStatus == 1) {
+                //已经有点赞,再次点击表示取消点赞
+                logger.info("用户[{}]取消了答案[{}]", user.getId(), comment.getId());
+                likeService.cancelLike(EntityType.ENTITY_ANSWER, commentId, user.getId());
+            } else {
+                //点赞
+                likeService.like(EntityType.ENTITY_ANSWER, commentId, user.getId());
+                EventModel event = new EventModel(EventType.LIKE).
+                        setEntityType(EntityType.ENTITY_ANSWER).
+                        setEntityId(commentId).
+                        setActorId(user.getId()).
+                        setEntityOwnerId(comment.getUserId()).
+                        setExt("CommentId", String.valueOf(commentId));
+                eventProducer.produceEvent(event);
+            }
+            long likeCount = likeService.getLikeCount(EntityType.ENTITY_ANSWER, commentId);
             //发通知,这里的'CommentId'必须设置,否则给用户的通知中无法找到对应的回答连接
-            EventModel event = new EventModel(EventType.LIKE).
-                    setEntityType(comment.getEntityType()).
-                    setEntityId(comment.getEntityId()).
-                    setActorId(user.getId()).
-                    setEntityOwnerId(comment.getUserId()).
-                    setExt("CommentId", String.valueOf(commentId));
-            eventProducer.produceEvent(event);
-
-            return QuestionUtil.getCodeJson(0, String.valueOf(likeCount));
+            return ResponseUtil.getCodeJson(0, String.valueOf(likeCount));
         } catch (Exception e) {
             logger.error("点赞错误", e);
-            return QuestionUtil.getCodeJson(-1, "some error exist");
+            return ResponseUtil.getCodeJson(-1, "some error exist");
         }
     }
 
@@ -71,13 +79,13 @@ public class LikeController {
         try {
             User user = hostHolder.getUser();
             if (user == null) {
-                return QuestionUtil.getCodeJson(999);
+                return ResponseUtil.getCodeJson(999);
             }
 
             long dislikeCount = likeService.dislike(EntityType.ENTITY_ANSWER, commentId, user.getId());
-            return QuestionUtil.getCodeJson(0, String.valueOf(dislikeCount));
+            return ResponseUtil.getCodeJson(0, String.valueOf(dislikeCount));
         } catch (Exception e) {
-            return QuestionUtil.getCodeJson(-1, "some error exist");
+            return ResponseUtil.getCodeJson(-1, "some error exist");
         }
     }
 

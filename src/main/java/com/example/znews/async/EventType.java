@@ -13,7 +13,9 @@ public enum EventType {
 
     FOLLOW(4),
 
-    UNFOLLOW(5);
+    UNFOLLOW(5),
+
+    QUESTION(6);
 
 
     private int value;
@@ -25,4 +27,4 @@ public enum EventType {
     public int getValue() {
         return value;
     }
-}
+    }

@@ -29,7 +29,7 @@ public class CommentService {
         return commentDao.deleteCommentById(id, -1) > 0;
     }
 
-    public boolean addComment(Comment comment) {
+    public int addComment(Comment comment) {
         //任何评论内容都需要加过滤
         String content = comment.getContent();
         content = HtmlUtils.htmlEscape(content);
@@ -40,7 +40,7 @@ public class CommentService {
         if (comment.getEntityType() == EntityType.ENTITY_QUESTION) {
             questionDao.plusCommentCount(comment.getEntityId());
         }
-        return commentDao.insertComment(comment) > 0;
+        return commentDao.insertComment(comment);
     }
 
     public List<Comment> getCommentByQuestion(Question question) {

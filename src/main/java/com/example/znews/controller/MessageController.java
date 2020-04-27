@@ -1,13 +1,12 @@
 package com.example.znews.controller;
 
-import com.example.znews.model.Comment;
 import com.example.znews.model.HostHolder;
 import com.example.znews.model.Message;
 import com.example.znews.model.User;
 import com.example.znews.service.MessageService;
 import com.example.znews.service.UserService;
 import com.example.znews.utils.MessageUtil;
-import com.example.znews.utils.QuestionUtil;
+import com.example.znews.utils.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +38,12 @@ public class MessageController {
         try {
             User sender = hostHolder.getUser();
             //需要用户登录才能发送消息
-            if (sender == null) return QuestionUtil.getCodeJson(999, "用户未登录");
+            if (sender == null) return ResponseUtil.getCodeJson(999, "用户未登录");
 
             User accepter = userService.findUserById(toId);
             if (accepter == null) {
                 //接受者不存在错误
-                return QuestionUtil.getCodeJson(998, "用户不存在");
+                return ResponseUtil.getCodeJson(998, "用户不存在");
             } else {
                 Message message = new Message();
                 message.setFromId(sender.getId());
@@ -53,11 +52,11 @@ public class MessageController {
                 message.setCreatedDate(new Date());
                 message.setConversationId(MessageUtil.generateConversationId(sender.getId(), accepter.getId()));
                 boolean flag = messageService.addMessage(message);
-                return QuestionUtil.getCodeJson(0, "发送成功");
+                return ResponseUtil.getCodeJson(0, "发送成功");
             }
         } catch (Exception e) {
             logger.error("消息发送失败", e);
-            return QuestionUtil.getCodeJson(1, "消息发送错误");
+            return ResponseUtil.getCodeJson(1, "消息发送错误");
         }
     }
 
