@@ -22,7 +22,11 @@ public interface CommentDao {
     //关于哪个entity的回答
     List<Comment> findCommentsByEntity(int entityType, int entityId);
 
+    List<Comment> findCommentsByEntities(int entityType,@Param("entityIds") List<Integer> entityIds);
+
     List<Comment> findCommentsByUserId(int userId,int entityType);
+
+
 
 
 }

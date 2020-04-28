@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,5 +55,11 @@ public class CommentService {
     public List<Comment> getAnswersByUser(User user) {
         return commentDao.findCommentsByUserId(user.getId(), EntityType.ENTITY_QUESTION);
     }
+
+    public List<Comment> getAnswersByEntities(List<Integer> questionsId) {
+        if (questionsId == null || questionsId.size() == 0) return new ArrayList<>();
+        return commentDao.findCommentsByEntities(EntityType.ENTITY_QUESTION, questionsId);
+    }
+
 
 }

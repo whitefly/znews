@@ -15,7 +15,7 @@
         where ticket = #{ticket};
     </select>
 
-    <insert id="insertUserTicket" useGeneratedKeys="true">
+    <insert id="insertUserTicket" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
         values(#{userId},#{ticket},#{expired},#{status})
     </insert>

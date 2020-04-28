@@ -4,7 +4,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" async="" src="/scripts/za-0.1.1.min.js"></script>
-    <script type="text/javascript" async="" src="/scripts/main/util/action.js"></script>
     <script async="" src="/scripts/ga.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
@@ -27,7 +26,7 @@
         <div class="zu-main-content">
             <div class="zu-main-content-inner">
                 <div class="zg-section" id="zh-home-list-title">
-                    <i class="zg-icon zg-icon-feedlist"></i>最新动态
+                    <i class="zg-icon zg-icon-feedlist"></i>问题列表
                     <span class="zg-right zm-noti-cleaner-setting" style="list-style:none">
                         <a href="https://nowcoder.com/settings/filter" class="zg-link-gray-normal">
                             <i class="zg-icon zg-icon-settings"></i>设置

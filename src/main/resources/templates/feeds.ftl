@@ -220,6 +220,55 @@
     </div>
 </#macro>
 
+<#macro question_element>
+    <div class="feed-item folding feed-item-hook feed-item-1">
+
+        <div class="feed-item-inner">
+            <div class="avatar">
+                <a title="${feed.json["userName"]}" class="zm-item-link-avatar" target="_blank"
+                   href="/user/${feed.json["userId"]}">
+                    <img src="../images/res/${feed.json["headUrl"]}"
+                         class="zm-item-img-avatar">
+                </a>
+            </div>
+            <div class="feed-main">
+                <div class="feed-source" data-za-module="FeedSource">${feed.json["userName"]} 创建了新问题</div>
+                <div class="feed-content" data-za-module="PostItem">
+                    <div class="entry-body post-body js-collapse-body">
+                        <div class="post-content">
+                            <div class="zh-summary summary clearfix">
+                                ${feed.json["questionTitle"]}
+                                <a href="/question/${feed.json["questionTitle"]}" }
+                                   class="toggle-expand"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <#--                    <div class="feed-meta">-->
+                    <#--                        <div class="zm-item-meta answer-actions clearfix js-contentActions">-->
+                    <#--                            <div class="zm-meta-panel">-->
+                    <#--                                <a data-follow="q:link" class="follow-link zg-follow meta-item"-->
+                    <#--                                   href="javascript:;" id="sfb-123114">-->
+                    <#--                                    <i class="z-icon-follow"></i>关注问题-->
+                    <#--                                </a>-->
+                    <#--                                <a href="#" name="addcomment"-->
+                    <#--                                   class="meta-item toggle-comment js-toggleCommentBox">-->
+                    <#--                                    <i class="z-icon-comment"></i>69 条评论-->
+                    <#--                                </a>-->
+                    <#--                                <a href="#" class="meta-item js-thank" data-thanked="false">-->
+                    <#--                                    <i class="z-icon-thank"></i>感谢-->
+                    <#--                                </a>-->
+                    <#--                                <button class="meta-item item-collapse js-collapse">-->
+                    <#--                                    <i class="z-icon-fold"></i>收起-->
+                    <#--                                </button>-->
+                    <#--                            </div>-->
+                    <#--                        </div>-->
+                    <#--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</#macro>
+
 <div class="zg-wrap zu-main clearfix " role="main">
     <div class="zu-main-content">
         <div class="zu-main-content-inner">
@@ -386,6 +435,53 @@
                                     </div>
                                     <div class="feed-main">
                                         <div class="feed-source" data-za-module="FeedSource">${feed.json["userName"]} 关注了这个问题</div>
+                                        <div class="feed-content" data-za-module="PostItem">
+                                            <div class="entry-body post-body js-collapse-body">
+                                                <div class="post-content">
+                                                    <div class="zh-summary summary clearfix">
+                                                        ${feed.json["questionTitle"]}
+                                                        <a href="/question/${feed.json["questionTitle"]}" }
+                                                           class="toggle-expand"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <#--                    <div class="feed-meta">-->
+                                            <#--                        <div class="zm-item-meta answer-actions clearfix js-contentActions">-->
+                                            <#--                            <div class="zm-meta-panel">-->
+                                            <#--                                <a data-follow="q:link" class="follow-link zg-follow meta-item"-->
+                                            <#--                                   href="javascript:;" id="sfb-123114">-->
+                                            <#--                                    <i class="z-icon-follow"></i>关注问题-->
+                                            <#--                                </a>-->
+                                            <#--                                <a href="#" name="addcomment"-->
+                                            <#--                                   class="meta-item toggle-comment js-toggleCommentBox">-->
+                                            <#--                                    <i class="z-icon-comment"></i>69 条评论-->
+                                            <#--                                </a>-->
+                                            <#--                                <a href="#" class="meta-item js-thank" data-thanked="false">-->
+                                            <#--                                    <i class="z-icon-thank"></i>感谢-->
+                                            <#--                                </a>-->
+                                            <#--                                <button class="meta-item item-collapse js-collapse">-->
+                                            <#--                                    <i class="z-icon-fold"></i>收起-->
+                                            <#--                                </button>-->
+                                            <#--                            </div>-->
+                                            <#--                        </div>-->
+                                            <#--                    </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <#elseif feed.type==6>
+                            <div class="feed-item folding feed-item-hook feed-item-1">
+
+                                <div class="feed-item-inner">
+                                    <div class="avatar">
+                                        <a title="${feed.json["userName"]}" class="zm-item-link-avatar" target="_blank"
+                                           href="/user/${feed.json["userId"]}">
+                                            <img src="../images/res/${feed.json["headUrl"]}"
+                                                 class="zm-item-img-avatar">
+                                        </a>
+                                    </div>
+                                    <div class="feed-main">
+                                        <div class="feed-source" data-za-module="FeedSource">${feed.json["userName"]} 创建了新问题</div>
                                         <div class="feed-content" data-za-module="PostItem">
                                             <div class="entry-body post-body js-collapse-body">
                                                 <div class="post-content">

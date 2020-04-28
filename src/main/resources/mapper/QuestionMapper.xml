@@ -23,7 +23,7 @@
 
 
 
-    <insert id="insertQuestion" useGeneratedKeys="true">
+    <insert id="insertQuestion" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
         values(#{title},#{content},#{userId},#{createdDate},#{commentCount})
     </insert>

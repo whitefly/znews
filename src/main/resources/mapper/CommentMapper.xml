@@ -45,4 +45,14 @@
         <include refid="tableName"></include>
         where user_id=${userId} and entity_type=${entityType}
     </select>
+
+    <select id="findCommentsByEntities" resultType="com.example.znews.model.Comment">
+        select  * from
+        <include refid="tableName"></include>
+        where entity_type=${entityType} and  entity_id in
+        <foreach item="item" index="index" collection="entityIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

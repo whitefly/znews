@@ -59,8 +59,12 @@ public class QuestionController {
             q.setCreatedDate(new Date());
             int id = questionService.addQuestion(q);
             if (id > 0) {
-                EventModel eventModel = new EventModel().setEventType(EventType.QUESTION).setEntityType(EntityType.ENTITY_QUESTION).setEntityId(id).setActorId(user.getId()).setEntityOwnerId(user.getId());
-                eventProducer.produceEvent(eventModel);
+                EventModel questionEvent = new EventModel().setEventType(EventType.QUESTION).setEntityType(EntityType.ENTITY_QUESTION).setEntityId(q.getId()).setActorId(user.getId()).setEntityOwnerId(user.getId());
+                eventProducer.produceEvent(questionEvent);
+                //提出问题后,自动关注该问题
+                followService.follow(user.getId(), EntityType.ENTITY_QUESTION, q.getId());
+                EventModel followEvent = new EventModel().setEventType(EventType.FOLLOW).setEntityType(EntityType.ENTITY_QUESTION).setEntityId(q.getId()).setActorId(user.getId()).setEntityOwnerId(user.getId());
+                eventProducer.produceEvent(followEvent);
                 return ResponseUtil.getCodeJson(0);
             }
             return ResponseUtil.getCodeJson(1, "添加问题失败");

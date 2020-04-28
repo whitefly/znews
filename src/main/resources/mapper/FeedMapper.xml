@@ -20,7 +20,8 @@
                 #{item}
             </foreach>
         </if>
-        LIMIT #{count}
+        order by id DESC
+        LIMIT #{count} ;
 
     </select>
 

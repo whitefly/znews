@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,9 +62,18 @@ public class CommentDaoTest {
 
     @Test
     public void findCommentsByUserId() {
-        int userId=51;
-        int entityType= EntityType.ENTITY_QUESTION;
+        int userId = 51;
+        int entityType = EntityType.ENTITY_QUESTION;
         List<Comment> result = commentDao.findCommentsByUserId(userId, entityType);
-        Assert.assertEquals(1,result.size());
+        Assert.assertEquals(1, result.size());
+    }
+
+    @Test
+    public void findCommentsByEntities() {
+        int entityType = EntityType.ENTITY_QUESTION;
+        List<Integer> entityIds = new ArrayList<>();
+        entityIds.add(1);
+        List<Comment> commentsByEntities = commentDao.findCommentsByEntities(entityType, entityIds);
+        System.out.println(commentsByEntities);
     }
 }

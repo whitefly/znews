@@ -74,7 +74,7 @@ public class RedisAdapter {
 
     public String rPop(String key) {
         ListOperations<String, String> sso = redisTemplate.opsForList();
-        return sso.rightPop(key, 0, TimeUnit.SECONDS);
+        return sso.rightPop(key, 0, TimeUnit.MINUTES);
     }
 
     public Boolean zAdd(String key, String value, double weight) {

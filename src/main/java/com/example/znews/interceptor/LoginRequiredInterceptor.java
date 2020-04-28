@@ -22,8 +22,10 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
         //如果这是一个需要登录的url,在get方法后加个参数+调整
         if (hostHolder.getUser() == null) {
             response.sendRedirect(loginUrl + "?next=" + request.getRequestURI());
+            return false;
         }
-        return false;
+        return true;
+
     }
 
 }

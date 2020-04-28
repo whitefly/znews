@@ -19,7 +19,7 @@
     </select>
 
 
-    <insert id="insertUser" useGeneratedKeys="true">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(name,password,salt,head_url)
         values(#{name},#{password},#{salt},#{headUrl})
     </insert>

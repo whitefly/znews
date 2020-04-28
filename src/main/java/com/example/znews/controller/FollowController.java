@@ -152,8 +152,8 @@ public class FollowController {
         for (User followee : usersById) {
             //获取关注该用户的用户数; 提问数和回答数
             long followerCount = followService.getFollowerCount(EntityType.ENTITY_USER, followee.getId());
-            List<Question> questions = questionService.getQuestionByUser(user);
-            List<Comment> answers = commentService.getAnswersByUser(user);
+            List<Question> questions = questionService.getQuestionByUser(followee);
+            List<Comment> answers = commentService.getAnswersByUser(followee);
 
             Map<String, Object> vo = new HashMap<>();
             vo.put("followerCount", followerCount);
@@ -164,7 +164,32 @@ public class FollowController {
         }
         model.addAttribute("vos",vos);
         model.addAttribute("followeeCount", followeeIds.size());
-        return "follow";
+        return "followee";
+    }
+
+    @GetMapping(path = "/followers")
+    public String followerUserList(Model model) {
+        User user = hostHolder.getUser();
+        List<Integer> followerIds = followService.getFollowers(EntityType.ENTITY_USER,user.getId() );
+
+        List<User> usersById = userService.findUsersById(followerIds);
+        List<Map<String, Object>> vos = new ArrayList<>();
+        for (User follower : usersById) {
+            //获取关注该用户的用户数; 提问数和回答数
+            long followerCount = followService.getFollowerCount(EntityType.ENTITY_USER, follower.getId());
+            List<Question> questions = questionService.getQuestionByUser(follower);
+            List<Comment> answers = commentService.getAnswersByUser(follower);
+
+            Map<String, Object> vo = new HashMap<>();
+            vo.put("followerCount", followerCount);
+            vo.put("answerCount", answers.size());
+            vo.put("questionCount", questions.size());
+            vo.put("user", follower);
+            vos.add(vo);
+        }
+        model.addAttribute("vos",vos);
+        model.addAttribute("followerCount", followerIds.size());
+        return "follower";
     }
 
 

@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class UserUtil {
 
-    public static int ANONYMOUS_ID = 4;
-    public static int SYSTEM_ID = 2;
+    public static int ANONYMOUS_ID = 2;
+    public static int SYSTEM_ID = 1;
 
     static private final String imageFoler = "static/images/res";
     static private final List<String> imageUrls;

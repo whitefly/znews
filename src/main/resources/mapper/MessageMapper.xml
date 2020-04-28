@@ -14,7 +14,7 @@
         where id = #{id};
     </select>
 
-    <insert id="insertMessage" useGeneratedKeys="true">
+    <insert id="insertMessage" useGeneratedKeys="true" keyProperty="id">
         insert into <include refid="tableName"></include>(<include refid="selectFields"></include>)
         values(#{fromId},#{toId},#{content},#{createdDate},#{hasRead},#{conversationId})
     </insert>
